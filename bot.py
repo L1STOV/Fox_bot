@@ -2,6 +2,7 @@ import telebot
 import config
 import pyowm
 import markup as m
+import inline_markup as im
 
 city = 'Николаев, Украина'  # need to create func that will detect location
 owm_api_key = config.owm_api_token
@@ -27,7 +28,9 @@ def fox_init(message):
     elif message.text == "Погода🌤":
         bot.send_message(message.chat.id, '🌤В городе ' + city + ' сейчас ' + str(round(temp, 1)) + '°C')
 
-    
+    elif message.text == "Гороскоп🔮":
+        bot.send_message(message.chat.id,
+                         text="Выберите ваш знак зодиака, чтобы получить гороскоп", reply_markup=im.inline_markup)
 
 
 bot.polling()
