@@ -22,4 +22,6 @@ inline_btn11 = InlineKeyboardButton(text='♒Водолей', callback_data='В�
 inline_btn12 = InlineKeyboardButton(text='♓Рыбы', callback_data='Рыбы')
 inline_markup.add(inline_btn11, inline_btn12)
 
+this_markup = inline_markup
+
 
