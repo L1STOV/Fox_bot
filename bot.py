@@ -3,7 +3,6 @@ import config
 import datetime
 import random
 import pyowm
-import requests
 import markup as m
 import inline_markup as im
 from selenium import webdriver
@@ -47,58 +46,59 @@ def fox_init(message):
         def query_handler(call):
             horoscope = ''
             emoji_list = ['🪐', '💫', '⭐', '🌟', '✨', '⚡', '💥']
-            random_emoji = emoji_list[(random.randint(0, len(emoji_list)))]
-            driver = webdriver.Chrome()
+            random_emoji = emoji_list[(random.randint(0, len(emoji_list)-1))]
             if call.data == 'Овен':
                 horoscope_date = '🔮♈ Гороскоп для Овнов на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/aries/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                aries = open("horoscopes/aries_file.txt", 'r')
+                answer = random_emoji + aries.readline()
+                print(answer)
             if call.data == 'Близнецы':
                 horoscope_date = '🔮♊ Гороскоп для Близнецов на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/gemini/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                gemini = open("horoscopes/gemini_file.txt", 'r')
+                answer = random_emoji + gemini.readline()
             if call.data == 'Телец':
                 horoscope_date = '🔮♉ Гороскоп для Тельцов на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/taurus/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                taurus = open("horoscopes/taurus_file.txt", 'r')
+                answer = random_emoji + taurus.readline()
             if call.data == 'Рак':
                 horoscope_date = '🔮♋ Гороскоп для Раков на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/cancer/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                cancer = open("horoscopes/cancer_file.txt", 'r')
+                answer = random_emoji + cancer.readline()
             if call.data == 'Лев':
                 horoscope_date = '🔮♌ Гороскоп для Львов на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/leo/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                leo = open("horoscopes/leo_file.txt", 'r')
+                answer = random_emoji + leo.readline()
             if call.data == 'Дева':
                 horoscope_date = '🔮♍ Гороскоп для Дев на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/virgo/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                virgo = open("horoscopes/virgo_file.txt", 'r')
+                answer = random_emoji + virgo.readline()
             if call.data == 'Весы':
                 horoscope_date = '🔮♎ Гороскоп для Весов на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/libra/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                libra = open("horoscopes/libra_file.txt", 'r')
+                answer = random_emoji + libra.readline()
             if call.data == 'Скорпион':
-                driver.get("https://goroskop.i.ua/scorpio/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                horoscope_date = '🔮♏ Гороскоп для Скорпионов на ' + str(now.day) + '.' + str(now.strftime("%m"))
+                scorpio = open("horoscopes/scorpio_file.txt", 'r')
+                answer = random_emoji + scorpio.readline()
             if call.data == 'Стрелец':
                 horoscope_date = '🔮♐ Гороскоп для Стрельцов на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/sagittarius/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                sagittarius = open("horoscopes/sagittarius_file.txt", 'r')
+                answer = random_emoji + sagittarius.readline()
             if call.data == 'Козерог':
                 horoscope_date = '🔮♑ Гороскоп для Козерогов на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/capricorn/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                capricorn = open("horoscopes/capricorn_file.txt", 'r')
+                answer = random_emoji + capricorn.readline()
             if call.data == 'Водолей':
                 horoscope_date = '🔮♒ Гороскоп для Водолеев на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/aquarius/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                aquarius = open("horoscopes/aquarius_file.txt", 'r')
+                answer = random_emoji + aquarius.readline()
             if call.data == 'Рыбы':
                 horoscope_date = '🔮♓ Гороскоп для Рыб на ' + str(now.day) + '.' + str(now.strftime("%m"))
-                driver.get("https://goroskop.i.ua/pisces/c/")
-                answer = str(random_emoji) + driver.find_element_by_tag_name("p").text
+                pisces = open("horoscopes/pisces_file.txt", 'r')
+                answer = random_emoji + pisces.readline()
 
             bot.send_message(call.message.chat.id, horoscope_date)
-            bot.send_message(message.chat.id, answer)
+            bot.send_message(call.message.chat.id, answer)
 
 
 bot.polling()
