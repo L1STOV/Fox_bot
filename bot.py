@@ -51,7 +51,6 @@ def fox_init(message):
                 horoscope_date = '🔮♈ Гороскоп для Овнов на ' + str(now.day) + '.' + str(now.strftime("%m"))
                 aries = open("horoscopes/aries_file.txt", 'r')
                 answer = random_emoji + aries.readline()
-                print(answer)
             if call.data == 'Близнецы':
                 horoscope_date = '🔮♊ Гороскоп для Близнецов на ' + str(now.day) + '.' + str(now.strftime("%m"))
                 gemini = open("horoscopes/gemini_file.txt", 'r')
