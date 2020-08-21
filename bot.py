@@ -6,6 +6,7 @@ import pyowm
 import markup as m
 from horoscope_parser import HoroscopeParser
 from horoscope_parser import zodiaks
+from cinema_paser import CinemaParser
 import inline_markup as im
 import threading
 
@@ -20,6 +21,9 @@ bot = telebot.TeleBot(config.tel_api_token)
 
 # Horoscope parser
 horoscope_parser = HoroscopeParser()
+
+#Cinema parser
+cinema_parser = CinemaParser()
 
 
 @bot.message_handler(content_types=['location', 'text'])
@@ -45,10 +49,14 @@ def fox_init(message):
                          text="Выберите ваш знак зодиака, чтобы получить гороскоп", reply_markup=im.inline_markup)
 
     elif message.text == "Курс валют💰":
-        pass
+        bot.send_message(message.chat.id, text="💰💤Функция в разработке")
 
     elif message.text == "Фильм🎬":
-        bot.send_message(message.chat.id, text="text")
+        film = cinema_parser.get_film()
+        emoji_list = ['🎬', '🎨', '🎭', '🎥', '📽', '🎞']
+        random_emoji = emoji_list[(random.randint(0, len(emoji_list) - 1))]
+        message_back = f"{random_emoji} *{film.title}*, *{film.year}* \n *Жанр*: _{film.genre}_ \n\n {film.overview}"
+        bot.send_message(message.chat.id, message_back, parse_mode="Markdown")
 
 
 @bot.callback_query_handler(func=lambda call: True)
