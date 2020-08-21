@@ -2,6 +2,7 @@ from selenium import webdriver
 import time
 from cinema import Cinema
 
+
 class CinemaParser:
     def get_film(self):
         cinema = Cinema()

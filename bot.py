@@ -6,7 +6,8 @@ import pyowm
 import markup as m
 from horoscope_parser import HoroscopeParser
 from horoscope_parser import zodiaks
-from cinema_paser import CinemaParser
+from cinema_parser import CinemaParser
+from currency_parser import CurrencyParser
 import inline_markup as im
 import threading
 
@@ -15,19 +16,29 @@ owm_api_key = config.owm_api_token
 owm = pyowm.OWM(owm_api_key)
 mgr = owm.weather_manager()
 
-
 # Bot init
 bot = telebot.TeleBot(config.tel_api_token)
 
 # Horoscope parser
 horoscope_parser = HoroscopeParser()
 
-#Cinema parser
+# Cinema parser
 cinema_parser = CinemaParser()
+
+# Cinema parser
+currency_parser = CurrencyParser()
 
 
 @bot.message_handler(content_types=['location', 'text'])
 def fox_init(message):
+
+    print('New bot command: '+message.text)
+    print(message.chat.id)
+    print(message.chat.first_name)
+    print(message.chat.last_name)
+    print(message.chat.username)
+    print('\n')
+
     if message.text == "/start":
         chat_id = message.chat.id
         intro_msg = f"Привет , {message.from_user.first_name}👋🏻" \
@@ -49,7 +60,13 @@ def fox_init(message):
                          text="Выберите ваш знак зодиака, чтобы получить гороскоп", reply_markup=im.inline_markup)
 
     elif message.text == "Курс валют💰":
-        bot.send_message(message.chat.id, text="💰💤Функция в разработке")
+        currencies = currency_parser.get_currency_exchange()
+        text_to_send = ''
+
+        for currency in currencies:
+            text_to_send = text_to_send + f"Title: {currency.title}\nSell: {currency.sell}\nBuy: {currency.buy}\n\n"
+
+        bot.send_message(message.chat.id, text=text_to_send)
 
     elif message.text == "Фильм🎬":
         film = cinema_parser.get_film()
