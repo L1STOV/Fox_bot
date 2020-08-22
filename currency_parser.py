@@ -1,9 +1,11 @@
 from selenium import webdriver
 from currency import Currency
 import time
+import datetime
 
 
 class CurrencyParser:
+
     def get_currency_exchange(self):
         driver = webdriver.Chrome()
         driver.get("https://finance.i.ua/")
@@ -22,10 +24,13 @@ class CurrencyParser:
         driver.close()
         return [usd_currency, eur_currency, rub_currency, pln_currency]
 
-    def parse_currency(self,row_element_by_css_selector):
+    def parse_currency(self, row_element_by_css_selector):
+
         currency = Currency()
         currency.title = row_element_by_css_selector.find_element_by_css_selector('th').text
         currency.sell = row_element_by_css_selector.find_element_by_css_selector('td:nth-child(2) span > span').text
         currency.buy = row_element_by_css_selector.find_element_by_css_selector('td:nth-child(3) span > span').text
 
         return currency
+
+

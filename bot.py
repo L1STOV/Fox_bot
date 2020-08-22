@@ -25,19 +25,12 @@ horoscope_parser = HoroscopeParser()
 # Cinema parser
 cinema_parser = CinemaParser()
 
-# Cinema parser
+# Currency parser
 currency_parser = CurrencyParser()
 
 
 @bot.message_handler(content_types=['location', 'text'])
 def fox_init(message):
-
-    print('New bot command: '+message.text)
-    print(message.chat.id)
-    print(message.chat.first_name)
-    print(message.chat.last_name)
-    print(message.chat.username)
-    print('\n')
 
     if message.text == "/start":
         chat_id = message.chat.id
@@ -60,15 +53,16 @@ def fox_init(message):
                          text="Выберите ваш знак зодиака, чтобы получить гороскоп", reply_markup=im.inline_markup)
 
     elif message.text == "Курс валют💰":
+        bot.send_message(message.chat.id, text="🦊 Собираю свежие данные")
         currencies = currency_parser.get_currency_exchange()
         text_to_send = ''
 
         for currency in currencies:
-            text_to_send = text_to_send + f"Title: {currency.title}\nSell: {currency.sell}\nBuy: {currency.buy}\n\n"
-
+            text_to_send = text_to_send + f"🇺🇦 UAH / {currency.title}\nПокупка: {currency.sell}\nПродажа: {currency.buy}\n\n"
         bot.send_message(message.chat.id, text=text_to_send)
 
     elif message.text == "Фильм🎬":
+        bot.send_message(message.chat.id, text="🦊 Выбираю фильм для вас")
         film = cinema_parser.get_film()
         emoji_list = ['🎬', '🎨', '🎭', '🎥', '📽', '🎞']
         random_emoji = emoji_list[(random.randint(0, len(emoji_list) - 1))]
